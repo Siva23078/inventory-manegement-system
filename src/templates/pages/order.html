@@ -205,6 +205,15 @@
             font-size: 1rem;
         }
 
+        .search {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            border-radius: 3px;
+            margin-bottom: 0.5rem;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -229,6 +238,12 @@
             max-width: 90%;
             padding: 2rem;
             position: relative;
+        }
+
+        .search-btn {
+            margin: 1rem;
+            cursor: pointer;
+            color: green;
         }
 
         .close-btn {
@@ -310,8 +325,10 @@
                 <div class="content-header">
                     <h2>Order</h2>
                 </div>
+                <div class="search">
                 <input type="text" id="search-item" placeholder="Enter Item ID or Name">
                 <button id="search-btn" class="btn search-btn">Search</button>
+                </div>
                 <table>
                     <thead>
                         <tr>
