@@ -292,13 +292,11 @@
         <div class="dashboard">
             <div class="sidebar">
                 <h3>Navigation</h3>
-                <a href="#" class="nav-item active">Dashboard</a>
-                <a href="#" class="nav-item">Products</a>
-                <a href="#" class="nav-item">Categories</a>
-                <a href="#" class="nav-item">Orders</a>
-                <a href="#" class="nav-item">Suppliers</a>
-                <a href="#" class="nav-item">Reports</a>
-                <a href="#" class="nav-item">Settings</a>
+                <a href="{{ url_for('home') }}" class="nav-item active">Dashboard</a>
+                <a href="{{ url_for('product') }}" class="nav-item">Products</a>
+                <a href="{{ url_for('category') }}" class="nav-item">Categories</a>
+                <a href="{{ url_for('order') }}" class="nav-item">Orders</a>
+                <a href="{{ url_for('report') }}" class="nav-item">Reports</a>
             </div>
 
             <div class="main-content">
@@ -512,7 +510,7 @@
         }
 
         function updateDashboardStats() {
-            
+
             // Wait for the inventory Promise to resolve
             inventory.then(items => {
                 document.getElementById('totalProducts').textContent = items.length;
