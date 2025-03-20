@@ -11,36 +11,86 @@ myclient = pymongo.MongoClient(os.getenv("MONGO_URI"))
 my_shopping_list = myclient["shopping_list"]
 
 inventory = Inventory(my_shopping_list)
-inventory.show()
+
+
+# inventory.show()
 @app.route("/")
 def home():
     return render_template("index.html")
 
-@app.route("/editItems", methods = ['POST'])
+
+@app.route("/product")
+def product():
+    return render_template("pages/product.html")
+
+
+@app.route("/category")
+def category():
+    return render_template("pages/category.html")
+
+
+@app.route("/order")
+def order():
+    return render_template("pages/order.html")
+
+
+@app.route("/report")
+def report():
+    return render_template("pages/report.html")
+
+
+@app.route("/editItems", methods=["POST"])
 def edit_items():
     data = request.get_json()
     if not data:
         return jsonify({"success": False, "message": "Invalid data received"}), 400
-    inventory.update_item(item_name=data['name'], qty=data['quantity'], item_category=data['category'], item_price=data['price'], id=data['id'], reorder_level=data['reorderLevel'])
+    inventory.update_item(
+        item_name=data["name"],
+        qty=data["quantity"],
+        item_category=data["category"],
+        item_price=data["price"],
+        id=data["id"],
+        reorder_level=data["reorderLevel"],
+    )
     return jsonify({"success": True, "message": "Product updated successfully"})
 
-@app.route("/addItems", methods = ['POST'])
+
+@app.route("/addItems", methods=["POST"])
 def add_items():
     data = request.get_json()
     if not data:
         return jsonify({"success": False, "message": "Invalid data received"}), 400
-    inventory.add_item(item_name=data['name'], qty=data['quantity'], item_category=data['category'], item_price=data['price'], reorder_level=data['reorderLevel'])
+    inventory.add_item(
+        item_name=data["name"],
+        qty=data["quantity"],
+        item_category=data["category"],
+        item_price=data["price"],
+        reorder_level=data["reorderLevel"],
+    )
     return jsonify({"success": True, "message": "Product added successfully"})
 
-@app.route("/removeItems", methods = ['POST'])
+
+@app.route("/removeItems", methods=["POST"])
 def remove_items():
     data = request.get_json()
     if not data:
         return jsonify({"success": False, "message": "Invalid data received"}), 400
-    inventory.del_item(id=data['id'])
+    inventory.del_item(id=data["id"])
     return jsonify({"success": True, "message": "Product deleted successfully"})
+
+
+@app.route("/orderItem", methods=["POST"])
+def order_item():
+    data = request.get_json()
+    if not data:
+        return jsonify({"success": False, "message": "Invalid data received"}), 400
+    inventory.order_item(id=data["id"], qty=data["qty"])
+    return jsonify({"success": True, "message": "Product deleted successfully"})
+
 
 @app.route("/get", methods=["GET"])
 def fetch():
     return jsonify({"inventory": inventory.fetch_all()})
+
+
 app.run()
