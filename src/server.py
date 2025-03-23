@@ -75,7 +75,7 @@ def remove_items():
     data = request.get_json()
     if not data:
         return jsonify({"success": False, "message": "Invalid data received"}), 400
-    inventory.del_item(id=data["id"])
+    inventory.del_item(id=int(data["id"]))
     return jsonify({"success": True, "message": "Product deleted successfully"})
 
 
