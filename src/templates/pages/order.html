@@ -343,7 +343,7 @@
                     </thead>
                     <tbody id="order-table-body"></tbody>
                 </table>
-                <div class="total-price">Total Price: $<span id="total-price">0.00</span></div>
+                <div class="total-price">Total Price: ₹<span id="total-price">0.00</span></div>
                 <button id="sell-btn" class="btn sell-btn">Sell</button>
                 <button id="back-btn" class="btn back-btn">Back</button>
             </div>
@@ -397,8 +397,8 @@
                                 <td>${item.id}</td>
                                 <td>${item.name}</td>
                                 <td><input type="number" class="quantity" data-id="${item.id}" value="${item.quantity}" min="1" max="${item.maxQuantity}"></td>
-                                <td>$${item.price.toFixed(2)}</td>
-                                <td>$${itemTotal.toFixed(2)}</td>
+                                <td>₹${item.price.toFixed(2)}</td>
+                                <td>₹${itemTotal.toFixed(2)}</td>
                                 <td><button class="remove-btn" data-id="${item.id}">Remove</button></td>
                             </tr>
                         `);
