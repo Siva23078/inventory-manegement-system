@@ -14,7 +14,12 @@ class Inventory:
     def assign_sno(self, id: int = None) -> int:
         if id is not None:
             return id
-        return self.sl.count_documents({}) + 1
+        sno = self.sl.count_documents({}) + 1
+        if self.if_exists_id(sno):
+            sno = 1
+            while self.if_exists_id(sno):
+                sno += 1 
+        return sno
 
     def set_qty(self, item_name, old_qty: int = None) -> int:
         qty = self.sl.find_one({"name": item_name})["qty"] + 1
