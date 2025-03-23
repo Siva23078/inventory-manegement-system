@@ -70,7 +70,7 @@ class Inventory:
 
     def del_item(self, id: int):
         if self.if_exists_id(id):
-            self.sl.delete_one({"_id": id})
+           self.sl.delete_one({"_id": id})
         else:
             print("Not Found")
 
@@ -85,6 +85,12 @@ class Inventory:
     def show(self):
         for x in self.sl.find():
             print(x)
+    
+    def set_login_status(stat: bool):
+        print("Failed Setting Login status")
+
+    def get_login_status() -> bool:
+        return True
 
     def fetch_all(self):
         lst = []

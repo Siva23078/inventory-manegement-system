@@ -280,8 +280,9 @@
         }
     </style>
 </head>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <body>
+    
     <header>
         <div class="container">
             <h1>Inventory Management System</h1>
@@ -427,6 +428,10 @@
             </form>
         </div>
     </div>
+    
+    <div class="chart-container" style="width: 20%; margin: auto;">
+        <canvas id="inventoryChart"></canvas>
+    </div>
 
     <footer>
         <p>Inventory Management System &copy; 2025</p>
@@ -449,6 +454,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             displayInventory();
             updateDashboardStats();
+            updatePieChart();
 
             // Add event listeners
             document.getElementById('addProductForm').addEventListener('submit', addProduct);
@@ -529,6 +535,34 @@
         }
 
 
+        function updatePieChart() {
+        inventory.then(items => {
+            const categories = {};
+            
+            items.forEach(item => {
+                categories[item.category] = (categories[item.category] || 0) + item.quantity;
+            });
+            
+            const labels = Object.keys(categories);
+            const data = Object.values(categories);
+            
+            const ctx = document.getElementById('inventoryChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Inventory Distribution',
+                        data: data,
+                        backgroundColor: [
+                            '#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6'
+                        ]
+                    }]
+                }
+            });
+        });
+    }
+
         // Add new product
         async function addProduct(e) {
             e.preventDefault();
@@ -560,11 +594,10 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    displayInventory();
-                    updateDashboardStats();
                     closeModal('addProductModal');
                     document.getElementById('addProductForm').reset();
-                    // alert("Product updated successfully!");
+                    location.reload();
+                    alert("Product updated successfully!");
                 } else {
                     alert("Error adding product: " + data.message);
                 }
@@ -590,8 +623,7 @@
                     const data = await response.json();
 
                     if (data.success) {
-                        displayInventory();
-                        updateDashboardStats();
+                        location.reload();
                     } else {
                         alert("Error deleting product: " + data.message);
                     }

@@ -342,7 +342,7 @@
 
                 inventory.forEach(item => {
                     let status = "Sufficient Stock";
-                    if (item.quantity < item.reorderLevel) {
+                    if (item.quantity <= item.reorderLevel) {
                         status = "Low Stock - Reorder Now";
                         alertMessage += `Product ${item.name} is below reorder level. Reorder now!<br>`;
                     }
@@ -353,7 +353,7 @@
                             <td>${item.name}</td>
                             <td>${item.category}</td>
                             <td>${item.quantity}</td>
-                            <td style="color: ${item.quantity < item.reorderLevel ? 'red' : 'green'};">${status}</td>
+                            <td style="color: ${item.quantity <= item.reorderLevel ? 'red' : 'green'};">${status}</td>
                         </tr>
                     `);
                 });
